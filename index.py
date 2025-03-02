@@ -50,9 +50,9 @@ def load(df, db_config):
         cur = conn.cursor()
 
         # Convert DataFrame to a list of tuples for bulk insertion
-        records = list(df.itertuples(index=False, name=None))
+        records = list(df.drop(columns=['id']).itertuples(index=False, name=None))
 
-        query = "INSERT INTO sales (id, product, price, date) VALUES %s"
+        query = "INSERT INTO sales (product, price, date) VALUES %s"
         execute_values(cur, query, records)
 
         conn.commit()
